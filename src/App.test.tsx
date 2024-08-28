@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import App, { steamLogicsticsLabel } from './App';
 
-test('renders learn react link', () => {
+test('renders steam logicstics label', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
+  const linkElement = screen.getByText(steamLogicsticsLabel);
   expect(linkElement).toBeInTheDocument();
 });
