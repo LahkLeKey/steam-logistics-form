@@ -2,22 +2,23 @@ import React, { useState } from 'react';
 import { Container, Typography } from '@mui/material';
 import Form from './components/Form';
 import { useSubmissionMutation } from './hooks/useSubmissionMutation';
-import { validateForm } from './validation/formValidation';
+import { validateForm } from './validation/validateForm';
 import { SubmissionData } from './types';
 import { v4 as uuidv4 } from 'uuid';
 
 export const steamLogicsticsLabel = 'Steam Logistics Form Submit Component';
 
 const App: React.FC = () => {
+  const initialValues: SubmissionData = { id: '', fieldName: '', description: '' };
   const [changes, setChanges] = useState(0);
   const [errors, setErrors] = useState<{ message: string }[]>([]);
   const [statusMessage, setStatusMessage] = useState('No changes');
   const [submissions, setSubmissions] = useState<SubmissionData[]>([]);
-  const [formValues, setFormValues] = useState<SubmissionData>({ id: '', fieldName: '' });
+  const [formValues, setFormValues] = useState<SubmissionData>(initialValues);
   const MAX_RETRY = 3;
 
   const handleFormReset = () => {
-    setFormValues({ id: '', fieldName: '' });
+    setFormValues(initialValues);
     setChanges(0);
     setErrors([]);
     setStatusMessage('No changes');

@@ -4,13 +4,14 @@ export interface FormState {
   submittedData: SubmissionData[];
   setChanges: (changes: number) => void;
   setErrors: (errors: number) => void;
-  addSubmission: (data: { fieldName: string }) => void;
+  addSubmission: (data: Omit<SubmissionData, 'id'>) => void;
   resetSubmissions: () => void;
 }
 
 export interface SubmissionData {
   id: string;
   fieldName: string;
+  description: string;
 }
 
 export interface SubmissionTableProps {

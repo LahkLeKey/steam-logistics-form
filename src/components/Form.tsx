@@ -5,7 +5,7 @@ import FormSubmitComponent from './FormSubmitComponent';
 import SnackbarNotification from './SnackbarNotification';
 import SubmissionTable from './SubmissionTable';
 import { FormProps } from '../types';
-import { validateForm } from '../validation/formValidation';
+import { validateForm } from '../validation/validateForm';
 
 const Form: React.FC<FormProps> = ({
   initialValues,
@@ -33,7 +33,7 @@ const Form: React.FC<FormProps> = ({
 
   const handleFormReset = () => {
     onFormReset();
-    reset({ fieldName: '' });
+    reset({ fieldName: '', description: '' });
   };
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const Form: React.FC<FormProps> = ({
     } else if (validationErrors.length > 0) {
       onStatusChange(`Validation errors: ${validationErrors.length}`);
       validationErrors.forEach((error) => {
-        setError('fieldName', { type: 'manual', message: error.message });
+        setError(error.path[0] as keyof typeof formValues, { type: 'manual', message: error.message });
       });
     } else {
       onStatusChange(`Unsubmitted changes: ${changeCount}`);
@@ -61,7 +61,7 @@ const Form: React.FC<FormProps> = ({
 
   useEffect(() => {
     if (status === 'success' || (status === 'idle' && !isFinalError)) {
-      reset({ fieldName: '' });
+      reset({ fieldName: '', description: '' });
     }
   }, [status, isFinalError, reset]);
 
@@ -82,6 +82,24 @@ const Form: React.FC<FormProps> = ({
             />
           )}
         />
+        <Box mt={2}>
+        <Controller
+          name="description"
+          control={control}
+          render={({ field, fieldState }) => (
+            <TextField
+              {...field}
+              label="Description"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+              error={!!fieldState.error}
+              helperText={fieldState.error?.message}
+            />
+          )}
+        />
+        </Box>
         <Box mt={2}>
           <FormSubmitComponent
             changes={changes}

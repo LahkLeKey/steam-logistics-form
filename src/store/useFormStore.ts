@@ -1,6 +1,6 @@
 import create from 'zustand';
 import { v4 as uuidv4 } from 'uuid';
-import { FormState } from '../types';
+import { FormState, SubmissionData } from '../types';
 
 const useFormStore = create<FormState>((set) => ({
   changes: 0,
@@ -8,7 +8,7 @@ const useFormStore = create<FormState>((set) => ({
   submittedData: [],
   setChanges: (changes) => set({ changes }),
   setErrors: (errors) => set({ errors }),
-  addSubmission: (data) =>
+  addSubmission: (data: Omit<SubmissionData, 'id'>) =>
     set((state) => ({
       submittedData: [
         ...state.submittedData,

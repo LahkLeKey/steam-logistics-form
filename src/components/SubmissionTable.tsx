@@ -2,8 +2,6 @@ import React from 'react';
 import { Box, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import { SubmissionTableProps } from '../types';
 
-
-
 const SubmissionTable: React.FC<SubmissionTableProps> = ({ submissions, isLoading }) => {
   if (isLoading) {
     return (
@@ -19,12 +17,13 @@ const SubmissionTable: React.FC<SubmissionTableProps> = ({ submissions, isLoadin
         <TableRow>
           <TableCell>ID</TableCell>
           <TableCell>Field Name</TableCell>
+          <TableCell>Description</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {submissions.length === 0 ? (
           <TableRow>
-            <TableCell colSpan={2}>
+            <TableCell colSpan={3}>
               <Typography variant="body2">No submissions yet.</Typography>
             </TableCell>
           </TableRow>
@@ -33,6 +32,7 @@ const SubmissionTable: React.FC<SubmissionTableProps> = ({ submissions, isLoadin
             <TableRow key={submission.id}>
               <TableCell>{submission.id}</TableCell>
               <TableCell>{submission.fieldName}</TableCell>
+              <TableCell>{submission.description}</TableCell>
             </TableRow>
           ))
         )}
